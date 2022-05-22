@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data.Models.Configuration;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,17 @@ namespace Data.Model
         public BookContext(DbContextOptions<BookContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new FavoriteBookConfiguration());
+            modelBuilder.ApplyConfiguration(new BookConfiguration());
+            modelBuilder.ApplyConfiguration(new BookCategoryConfiguration());
         }
         public DbSet<Book> Books { get; set; }
-        public DbSet<BookCategory> CategoryName { get; set; }
-        public DbSet<PersonClass> FavoriteBook { get; set; }
+        public DbSet<BookCategory> BookCategories { get; set; }
+        public DbSet<FavoriteBook> FavoriteBooks { get; set; }
     }
 }

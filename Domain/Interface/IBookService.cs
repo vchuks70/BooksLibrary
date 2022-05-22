@@ -1,4 +1,6 @@
 ﻿using Data.Model;
+using Domain.DTO.Requests;
+using Domain.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +11,11 @@ namespace Domain.Interface
 {
     public interface IBookService
     {
-        Task<IEnumerable<Book>> Get();
+        Task<IEnumerable<Book>> Get();  
         Task<Book> Get(int id);
-        Task<Book> Create(Book book);
-        Task Update(Book book);
-        Task Delete(int id);
+        Task<GlobalResponse<Book>> Create(CreateBookRequest request);
+        Task<GlobalResponse> Update(int bookId, UpdateBookRequest request);
+        Task<GlobalResponse> Delete(int id);
 
     }
 }

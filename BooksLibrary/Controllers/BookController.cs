@@ -1,4 +1,5 @@
 ﻿using Data.Model;
+using Domain.DTO.Requests;
 using Domain.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,30 +33,25 @@ namespace BooksLibrary.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Book>> PostBooks([FromBody] Book book)
+        public async Task<ActionResult<Book>> PostBooks([FromBody] CreateBookRequest book)
         {
-            var newBook = await _bookService.Create(book);
-            return CreatedAtAction(nameof(GetBooks), new { id = newBook.Id }, newBook);
+            var response = await _bookService.Create(book);
+            return response.Status ? Ok(response) : BadRequest(response);
+            
         }
 
-        public async Task <ActionResult> PutBooks(int id, [FromBody] Book book)
+        [HttpPut("{id}")]
+        public async Task <ActionResult> PutBooks(int id, [FromBody] UpdateBookRequest request)
         {
-            if(id != book.Id)
-            {
-                return BadRequest();
-            }
-            await _bookService.Update(book);
-            return NoContent();
+            var response = await _bookService.Update(id, request);
+            return response.Status ? Ok(response) : BadRequest(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete (int id)
         {
-            var bookToDelete = await _bookService.Get(id);
-            if (bookToDelete == null)
-                return NotFound();
-            await _bookService.Delete(bookToDelete.Id);
-            return NoContent();
+            var response = await _bookService.Delete(id);
+            return response.Status ? Ok(response) : BadRequest(response);
         }
     }
 }

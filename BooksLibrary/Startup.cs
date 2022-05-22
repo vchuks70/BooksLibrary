@@ -30,9 +30,12 @@ namespace BooksLibrary
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BookContext>(o => o.UseSqlite("Data source=books.db"));
+            services.AddDbContext<BookContext>(opt => {
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBookCategoryService, BookCategoryService>();
+            services.AddScoped<IFavoriteBookService, FavoriteBookService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

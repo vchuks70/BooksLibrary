@@ -1,4 +1,5 @@
 ﻿using Data;
+using Domain.DTO.Requests;
 using Domain.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace BooksLibrary.Controllers
 
         [HttpPost]
         [Route("AddBookCategory")]
-        public async Task<IActionResult> AddBookCategory([FromBody] BookCategory model)
+        public async Task<IActionResult> AddBookCategory([FromBody] AddBookCategoryRequest model)
         {
             var result = await _bookCategoryService.AddBookCategory(model);
             return result.Status == true ? Ok(result) : BadRequest(result);
@@ -36,7 +37,7 @@ namespace BooksLibrary.Controllers
         }
 
         [HttpGet]
-        [Route("GetSingleBookCategory{productCategoryId}")]
+        [Route("GetSingleBookCategory/{bookCategoryId}")]
         public async Task<ActionResult<BookCategory>> GetSingleBookCategory([FromRoute] int bookCategoryId)
         {
             var SingleBookCategory = await _bookCategoryService.GetSingleBookCategory(bookCategoryId);
@@ -44,6 +45,28 @@ namespace BooksLibrary.Controllers
         }
 
 
+        [HttpPost]
+        [Route("move-book-to-category")]
+        public async Task<ActionResult<IEnumerable<BookCategory>>> MoveBookToCategory([FromBody] MoveBookToCategoryRequest request)
+        {
+            var result = await _bookCategoryService.MoveBookToCategory(request);
+            return result.Status == true ? Ok(result) : BadRequest(result);
+        }
 
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ActionResult<IEnumerable<BookCategory>>> MoveBookToCategory([FromRoute] int id)
+        {
+            var result = await _bookCategoryService.DeleteCategory(id);
+            return result.Status == true ? Ok(result) : BadRequest(result);
+        }
+
+        [HttpPut]
+        [Route("update-book-category")]
+        public async Task<ActionResult<IEnumerable<BookCategory>>> UpdateBookCategory([FromBody] UpdateBookCategoryRequest request)
+        {
+            var result = await _bookCategoryService.UpdateBookCategory(request);
+            return result.Status == true ? Ok(result) : BadRequest(result);
+        }
     }
 }
