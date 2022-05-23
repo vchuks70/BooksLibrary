@@ -8,7 +8,7 @@ It also has the books category which is used to classify the types books availab
 Finally, this application also allows you save books to your favourite list as well as get the list of favourite books.
 
 # Requirement
-Before starting, you need to have Git and .NET SDK 5.0 installed. Alternatively, you can download the code as a zip file. -Clone the project using https://github.com/vchuks70/BooksLibrary.git -Or Unzip the file -Open as a new project in visual studio 2019/2022 -Build the project and run without debugging using ctrl + F5. After which the endpoints can be tested using postman or swagger
+Before starting, you need to have Git and .NET SDK 5.0 installed. Alternatively, you can download the code as a zip file. -Clone the project using [https://github.com/vchuks70/BooksLibrary.git](https://github.com/vchuks70/BooksLibrary.git) -Or Unzip the file -Open as a new project in visual studio 2019/2022 -Build the project and run without debugging using ctrl + F5. After which the endpoints can be tested using postman or swagger
 
 # Technologies
 
