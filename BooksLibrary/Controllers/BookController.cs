@@ -20,19 +20,19 @@ namespace BooksLibrary.Controllers
             _bookService = bookService;
         }
 
-        [HttpGet]
+        [HttpGet("Get-List-Of-Books")]
         public async Task<IEnumerable<Book>> GetBooks()
         {
             return await _bookService.Get();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("Get-Single-Book/{id}")]
         public async Task<ActionResult<Book>> GetBooks(int id)
         {
             return await _bookService.Get(id);
         }
 
-        [HttpPost]
+        [HttpPost("Create-Book")]
         public async Task<ActionResult<Book>> PostBooks([FromBody] CreateBookRequest book)
         {
             var response = await _bookService.Create(book);
@@ -40,14 +40,14 @@ namespace BooksLibrary.Controllers
             
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("Update/{id}")]
         public async Task <ActionResult> PutBooks(int id, [FromBody] UpdateBookRequest request)
         {
             var response = await _bookService.Update(id, request);
             return response.Status ? Ok(response) : BadRequest(response);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete-Book/{id}")]
         public async Task<ActionResult> Delete (int id)
         {
             var response = await _bookService.Delete(id);
